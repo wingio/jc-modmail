@@ -8,6 +8,7 @@
   
   ---
   
+  [![Discord](https://img.shields.io/discord/464247256648777738?label=Discord&logo=discord&logoColor=fff&style=for-the-badge)](https://discord.gg/jawsh)
   ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/wingio/jc-modmail?logo=github&logoColor=%23fff&style=for-the-badge)
   ![Line count](https://img.shields.io/tokei/lines/github/wingio/jc-modmail?logo=github&logoColor=%23fff&style=for-the-badge)
   ![GitHub top language](https://img.shields.io/github/languages/top/wingio/jc-modmail?style=for-the-badge)
