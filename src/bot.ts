@@ -1,4 +1,4 @@
-import { Client, Collection, IntentsBitField, Message } from "discord.js"
+import { Client, Collection, IntentsBitField, Message, Partials } from "discord.js"
 import * as fs from "fs"
 import { WithId } from "mongodb"
 import Command from "./commands/base/Command"
@@ -7,7 +7,9 @@ import { collections, connectToDatabase } from "./Database"
 import { Item, ItemFlags, ItemType, RoleItem } from "./models/Item"
 import Logger from "./utils/Logger"
 
-let bot = new Client({intents: new IntentsBitField(32767 | IntentsBitField.Flags.MessageContent)})
+
+
+export const bot = new Client({intents: new IntentsBitField(32767 | IntentsBitField.Flags.MessageContent | IntentsBitField.Flags.DirectMessages), partials: [Partials.Channel]})
 let logger = new Logger("DEBUG", "Bot")
 
 export const commands: Collection<string[], Command> = new Collection();

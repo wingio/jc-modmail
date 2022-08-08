@@ -18,4 +18,8 @@ export default class Config {
 
     public static modmailCategoryId = process.env.MODMAIL_CATEGORY_ID
 
+    public static modRoleId = process.env.MOD_ROLE_ID
+    
+    public static logChannelId = process.env.LOG_CHANNEL
+
 }

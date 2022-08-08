@@ -2,10 +2,11 @@
 import mongodb, { MongoClient, Collection } from 'mongodb';
 import Config from './Config';
 import { Item } from './models/Item';
+import ModMail from './models/ModMail';
 import User from './models/User';
 import Logger from './utils/Logger';
 
-export const collections : {users?: Collection<User>, items?: Collection<Item>, shops?: Collection, shop?: Collection<Item>} = {};
+export const collections : {users?: Collection<User>, items?: Collection<Item>, shops?: Collection, shop?: Collection<Item>, modmails?: Collection<ModMail>} = {};
 
 export async function connectToDatabase() {
     const client: MongoClient = new MongoClient(Config.MONGO_URI);
@@ -18,11 +19,13 @@ export async function connectToDatabase() {
     const itemsCollection = db.collection<Item>("items");
     const shopsCollection = db.collection("shops");
     const shopCollection = db.collection<Item>("shop");
+    const mailsCollection = db.collection<ModMail>("modmails");
  
     collections.users = usersCollection;
     collections.items = itemsCollection;
     collections.shops = shopsCollection;
     collections.shop = shopCollection;
+    collections.modmails = mailsCollection;
        
     new Logger("DEBUG", "Database").info(`Successfully connected to database: ${db.databaseName}`);
 }

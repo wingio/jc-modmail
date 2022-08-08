@@ -5,13 +5,12 @@ import Logger from "../utils/Logger";
 import { checkPermissions } from "../utils/PermissionUtils";
 import Event from "./Event";
 
-export default class MessageCreateEvent extends Event {
+export default class MessageCommandEvent extends Event {
     public static eventName: string = "messageCreate";
-    static log: Logger = new Logger("DEBUG", "MessageCreateEvent");
+    static log: Logger = new Logger("DEBUG", "CommandHandler");
 
     public static handle(client: Client, msg : Message) {
         if(msg.author.bot) return;
-
         if(!msg.channel.isDMBased()) this.log.info(`[${msg.guild.name}/#${msg.channel.name}] (${msg.author.id}) ${msg.author.tag} >> ${msg.content}`)
 
         if(msg.content.startsWith(Config.prefix)) {
