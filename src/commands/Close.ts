@@ -3,6 +3,7 @@ import Config from "../Config";
 import { collections } from "../Database";
 import { getModmail } from "../utils/modmail/ModMailManager";
 import * as fs from "fs"
+import Logger from "../utils/Logger";
 
 export async function run(client: Client, msg: Message, args: string[]) {
     if(msg.channel.isDMBased()) return
@@ -23,6 +24,7 @@ export async function run(client: Client, msg: Message, args: string[]) {
                 value: msg.author.toString()
             }
         )
+        .setTimestamp(new Date())
     
     let transcript = ""
     ticket.log.forEach(m => {
@@ -46,11 +48,14 @@ export async function run(client: Client, msg: Message, args: string[]) {
                     } )
                 }
             })
+        }).catch(e => {
+            msg.react("❌")
+            new Logger("DEBUG", "Logging").error("Failed to log transcript:", e)
         })
     })
 
 }
 
 export const names = ["close"];
-export const description = "View commands.";
+export const description = "Close the current modmail channel.";
 export const dev = false;
