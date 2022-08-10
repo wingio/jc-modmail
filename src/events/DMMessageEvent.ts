@@ -31,6 +31,8 @@ export default class DMMessageEvent extends Event {
             collections.users.findOne({id: msg.author.id}).then(u => user = u)
         })
 
+        if(user.blocked) return msg.react("❌")
+
         if(!hasMail) createConvo(user, client, msg) ;else {
 
             let modmail = await collections.modmails.findOne( { user: msg.author.id, closed: false } )

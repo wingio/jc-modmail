@@ -14,7 +14,9 @@ export default class ModMail implements Document {
        public webhookToken: string
     ) {}
 
-    public static sendMail(modmail: ModMail, msg: DMessage) {
+    public static async sendMail(modmail: ModMail, msg: DMessage) {
+        let user = await collections.users.findOne({id: msg.author.id})
+        if(user && user.blocked) return msg.react("❌")
         bot.fetchWebhook(modmail.webhookId, modmail.webhookToken).then(hook => {
 
             let content = msg.content
