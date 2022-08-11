@@ -16,6 +16,8 @@ export default class Config {
 
     public static prefix: string = "mm?";
 
+    public static currency: string = "<:JawshCoin:820839077493735484>"
+
     public static modmailCategoryId = process.env.MODMAIL_CATEGORY_ID
 
     public static modRoleId = process.env.MOD_ROLE_ID

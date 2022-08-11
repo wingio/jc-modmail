@@ -1,6 +1,7 @@
 import { Client, Message, EmbedBuilder } from "discord.js";
 import { WithId } from "mongodb";
 import { commands } from "../bot";
+import Config from "../Config";
 import { collections } from "../Database";
 import { ItemFlags, ItemType, RoleItem } from "../models/Item";
 
@@ -8,7 +9,7 @@ export async function run(client: Client, msg: Message, args: string[]) {
 
     var pagenumber = (args[0]) ? parseInt(args[0], 10) : 1
 
-    let shop = await (await collections.shop.find().toArray()).sort((a,b) => a.price - b.price)
+    let shop = await (await collections.items.find({shop: client.user.id}).toArray()).sort((a,b) => a.price - b.price)
     if (pagenumber < 1 || pagenumber > Math.ceil(shop.length / 6)) pagenumber = 1
 
     var e = new EmbedBuilder()
@@ -32,13 +33,13 @@ export async function run(client: Client, msg: Message, args: string[]) {
                         flags += ' and'
                     }
                     if (item.flags.includes(ItemFlags.itemrequirement)) {
-                        var itm = await collections.shop.findOne({ id: item.itemneeded })
+                        var itm = await collections.items.findOne({ id: item.itemneeded })
                         flags += ` ${itm.name}`
                     }
                 }
             }
             e.addFields({
-                name: `${item.name} - <:JawshCoin:820839077493735484> ${numberWithCommas(item.price)}`,
+                name: `${item.name} - ${Config.currency} ${numberWithCommas(item.price)}`,
                 value: `${item.description}\nID: \`${item.id}\`\nType: \`${Object.getOwnPropertyNames(ItemType)[item.type + 2]}\`     Stock: ${item.stock}\n${flags}`,
                 inline: true
             })

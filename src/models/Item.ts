@@ -1,15 +1,16 @@
 import { Document } from "mongodb";
+import { bot } from "../bot";
 
 export class Item implements Document {
 
-    constructor(public name: string, public price: number, public description: string, public id: string, public stock: number, public type: ItemType, public flags: ItemFlags[]) {}
+    constructor(public name: string, public price: number, public description: string, public id: string, public stock: number, public type: ItemType, public flags: ItemFlags[], public shop: string = bot.user.id) {}
 
 }
 
 export class CustomItem extends Item {
 
-    constructor(public name: string, public price: number, public description: string, public id: string, public stock: number, public type: ItemType, public flags: ItemFlags[], public step: number, public steptimestamp: bigint, public shopid: string, public prodCost: number) {
-        super(name, price, description, id, stock, type, flags);
+    constructor(public name: string, public price: number, public description: string, public id: string, public stock: number, public type: ItemType, public flags: ItemFlags[], public step: number, public steptimestamp: bigint, public shop: string, public prodCost: number) {
+        super(name, price, description, id, stock, type, flags, shop);
     }
 
 }
