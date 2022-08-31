@@ -26,10 +26,11 @@ export default class DMMessageEvent extends Event {
         this.log.info(`[DM] (${msg.author.id}) ${msg.author.tag} >> ${msg.content}`)
         let hasMail = await hasOpenConvo(msg.author.id);
 
-        let user = await collections.users.findOne({id: msg.author.id})
-        if(!user) collections.users.insertOne(new User([], msg.author.id)).then(() => {
-            collections.users.findOne({id: msg.author.id}).then(u => user = u)
-        })
+        let user = await collections.users.findOne({id: msg.author.id}) as User
+        if(!user) {
+            user = new User([], msg.author.id)
+            collections.users.insertOne(user)
+        }
 
         if(user.blocked) return msg.react("❌")
 
