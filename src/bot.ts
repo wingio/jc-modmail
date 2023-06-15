@@ -1,10 +1,8 @@
 import { Client, Collection, IntentsBitField, Message, Partials } from "discord.js"
 import * as fs from "fs"
-import { WithId } from "mongodb"
 import Command from "./commands/base/Command"
 import Config from "./Config"
-import { collections, connectToDatabase } from "./Database"
-import { Item, ItemFlags, ItemType, RoleItem } from "./models/Item"
+import { connectToDatabase } from "./Database"
 import Logger from "./utils/Logger"
 
 
