@@ -11,6 +11,7 @@ export default class MessageCommandEvent extends Event {
 
     public static handle(client: Client, msg : Message) {
         if(msg.author.bot) return;
+        if(msg.webhookId) return; // Check if message is from a webhook
         if(!msg.channel.isDMBased()) this.log.info(`[${msg.guild.name}/#${msg.channel.name}] (${msg.author.id}) ${msg.author.tag} >> ${msg.content}`)
 
         if(msg.content.startsWith(Config.prefix)) {
@@ -20,7 +21,9 @@ export default class MessageCommandEvent extends Event {
             if(!command) return;
             try {
                 if(command.dev && msg.author.id !== Config.devId) return;
-                if(!checkPermissions(msg.guild.members.me, PermissionFlagsBits.SendMessages, msg.channel.id)) return;
+                if (!msg.channel.isDMBased()) { // Check if message is from a guild before checking permissions
+                    if (!checkPermissions(msg.guild.members.me, PermissionFlagsBits.SendMessages, msg.channel.id)) return;
+                }
                 command.run(client, msg, args);
             } catch(e) {
                 this.log.error("Error while running: " + Config.prefix + commandName, e);

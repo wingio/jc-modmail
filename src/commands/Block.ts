@@ -1,6 +1,4 @@
-import { Client, Message, EmbedBuilder } from "discord.js";
-import { commands } from "../bot";
-import Config from "../Config";
+import { Client, Message } from "discord.js";
 import { collections } from "../Database";
 import User from "../models/User";
 
@@ -10,12 +8,12 @@ export async function run(client: Client, msg: Message, args: string[]) {
 
     let user = await collections.users.findOne({id: target.id})
     if(!user) {
-        collections.users.insertOne(new User([], target.id, true))
+        await collections.users.insertOne(new User([], target.id, true))
     } else {
-        collections.users.updateOne({id: target.id}, {$set: {blocked: true}})
+        await collections.users.updateOne({id: target.id}, {$set: {blocked: true}})
     }
 
-    msg.reply({
+    await msg.reply({
         content: `${target} blocked from sending modmail.`,
         allowedMentions: {repliedUser: true, users: [target.id]}
     })

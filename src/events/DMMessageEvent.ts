@@ -1,12 +1,10 @@
 import { Client, Message, PermissionFlagsBits } from "discord.js";
-import { commands } from "../bot";
 import Config from "../Config";
 import { collections } from "../Database";
 import ModMail from "../models/ModMail";
 import User from "../models/User";
 import Logger from "../utils/Logger";
 import { createConvo, getModmail, hasOpenConvo } from "../utils/modmail/ModMailManager";
-import { checkPermissions } from "../utils/PermissionUtils";
 import Event from "./Event";
 
 export default class DMMessageEvent extends Event {
@@ -29,16 +27,16 @@ export default class DMMessageEvent extends Event {
         let user = await collections.users.findOne({id: msg.author.id}) as User
         if(!user) {
             user = new User([], msg.author.id)
-            collections.users.insertOne(user)
+            await collections.users.insertOne(user)
         }
 
         if(user.blocked) return msg.react("❌")
 
-        if(!hasMail) createConvo(user, client, msg) ;else {
+        if(!hasMail) await createConvo(user, client, msg) ;else {
 
             let modmail = await collections.modmails.findOne( { user: msg.author.id, closed: false } )
             if(!modmail) return
-            ModMail.sendMail(modmail, msg)
+            await ModMail.sendMail(modmail, msg)
 
         }
 

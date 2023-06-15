@@ -1,7 +1,7 @@
-import { Channel, TextChannel, Message as DMessage, JSONEncodable, AttachmentPayload, EmbedBuilder, APIEmbed, GuildTextBasedChannel } from "discord.js";
+import { TextChannel, Message as DMessage, EmbedBuilder, APIEmbed } from "discord.js";
 import { bot } from "../bot";
 import { collections } from "../Database";
-import { Document, WithId } from "mongodb";
+import { Document } from "mongodb";
 
 export default class ModMail implements Document {
     constructor (
