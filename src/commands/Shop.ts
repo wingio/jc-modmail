@@ -1,6 +1,5 @@
 import { Client, Message, EmbedBuilder } from "discord.js";
 import { WithId } from "mongodb";
-import { commands } from "../bot";
 import Config from "../Config";
 import { collections } from "../Database";
 import { ItemFlags, ItemType, RoleItem } from "../models/Item";
@@ -9,12 +8,12 @@ export async function run(client: Client, msg: Message, args: string[]) {
 
     var pagenumber = (args[0]) ? parseInt(args[0], 10) : 1
 
-    let shop = await (await collections.items.find({shop: client.user.id}).toArray()).sort((a,b) => a.price - b.price)
+    let shop = (await collections.items.find({shop: client.user.id}).toArray()).sort((a, b) => a.price - b.price)
     if (pagenumber < 1 || pagenumber > Math.ceil(shop.length / 6)) pagenumber = 1
 
     var e = new EmbedBuilder()
         .setTitle('Shop')
-        .setDescription('Use `mm!buy [id]` to add it to your inventory')
+        .setDescription(`Use **${Config.prefix}buy [id]** to add it to your inventory`)
         .setFooter({
             text: `Page ${pagenumber}/${Math.ceil(shop.length / 6)}`
         })

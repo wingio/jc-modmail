@@ -1,8 +1,8 @@
-import { CategoryChannel, Channel, ChannelType, Client, Message, PermissionFlagsBits, PermissionOverwrites, TextChannel } from "discord.js";
+import { CategoryChannel, ChannelType, Client, Message, PermissionFlagsBits, TextChannel } from "discord.js";
 import { WithId } from "mongodb";
 import Config from "../../Config";
 import { collections } from "../../Database";
-import ModMail, { Message as MMessage } from "../../models/ModMail";
+import ModMail from "../../models/ModMail";
 import User from "../../models/User";
 import { checkPermissions } from "../PermissionUtils";
 
