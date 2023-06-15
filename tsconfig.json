@@ -2,7 +2,7 @@
     "compilerOptions": {
       "module": "commonjs",
       "moduleResolution": "node",
-      "target": "es2017",
+      "target": "es2020", // change to es2020 (Encountered errors with BigInt)
       "lib": [
         "es6",
         "dom"
